@@ -1,0 +1,27 @@
+{
+  "name": "userapp",
+  "version": "1.0.0",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jrowbotham93/userApp.git"
+  },
+  "keywords": [
+    "userApp"
+  ],
+  "author": "James Rowbotham",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jrowbotham93/userApp/issues"
+  },
+  "homepage": "https://github.com/jrowbotham93/userApp#readme",
+  "description": "",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "ejs": "^2.6.1",
+    "express": "^4.16.4"
+  }
+}

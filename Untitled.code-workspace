@@ -1,0 +1,16 @@
+{
+	"folders": [
+		{
+			"path": "app.js"
+		},
+		{
+			"path": "index.ejs"
+		},
+		{
+			"path": "node_modules"
+		},
+		{
+			"path": "view"
+		}
+	]
+}
