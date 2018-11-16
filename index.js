@@ -6,6 +6,9 @@
     const port = 3000 
     const bodyParser = require('body-parser')
 
+
+
+    app.use('/public', express.static('public'));
     app.use(bodyParser.urlencoded({ extended: false }))
     app.set('view engine', 'ejs')
 
@@ -21,24 +24,47 @@
     });
 });
 
-    app.post('/userInfo', function (req, res){
-        fs.readFile('users.json', function ( error, data) {
-            if (error ) { throw error
-            }
-            var obj = JSON.parse(data);
+    // app.post('/userInfo', function (req, res){
+    //     fs.readFile('users.json', function ( error, data) {
+    //         if (error ) { throw error
+    //         }
+    //         var obj = JSON.parse(data);
         
-        let userInput1 = req.body.firstname;
-        let userInput2 = req.body.lastname;
+    //     let userInput1 = req.body.firstname;
+    //     let userInput2 = req.body.lastname;
 
-        function userFinder(){
-            for(i = 0; i < obj.length; i++){
-                if (userInput1 == obj[i].firstname || userInput2 == obj[i].lastname)
-                res.render('userInfo', {user: obj[i]})
-         }
-        }
-             userFinder()
+    //     function userFinder(){
+    //         for(i = 0; i < obj.length; i++){
+    //             if (userInput1 == obj[i].frstname || userInput2 == obj[i].lastname)
+    //             res.render('userInfo', {user: obj[i]})
+    //      }
+    //     }
+    //          userFinder()
+    // })
+
+    app.post('/userInfo', function (req, res){
+        console.log(req)
+
+        fs.readFile('users.json', function (error, data){
+                if (error) { throw error}
+                var obj = JSON.parse(data);
+                const result = [];
+
+               for (let i = 0; i < obj.length; i++) {
+                   if (obj[i].firstname.indexOf(req.body.userInput) > -1
+                       || obj[i].lastname.indexOf(req.body.userInput) > -1){
+                       result.push(obj[i]);
+                       console.log("Ressult", result);
+                    
+                   }
+               }
+               var response = {user: result}
+                console.log("ress", result)
+                res.send(response);
+            })
+
+        
     })
-})
 
     app.post('/newuser', function (req, res){
         fs.readFile('users.json', function (error, data){
@@ -65,6 +91,7 @@
         res.redirect("/")
     
         });
+
         
     
          

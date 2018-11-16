@@ -1,56 +1,35 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>User Information Application</title>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-             <script>   $(document).ready(function(){
-                        $("h1").hide();
-                        $("h1").fadeIn(11000);
-                        $(".newUser0").hide();
-                        $(".newUser0").fadeIn(2000);
-                        $(".newuser").hide();
-                        $(".newuser").fadeIn(2000);
-                        $(".newuser1").hide();
-                        $(".newuser1").fadeIn(3000);
-                    });                
-            </script>     
-        
-            <style>
-              body {background-color: powderblue;}
-              h1   {color: black;font-size: 300%; margin: 50px 0px; text-align: center; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif }
-              p    {color: rgb(19, 13, 13);}
-              table {color: powderblue }
-              form {width: 459px; margin: 0 auto; display: block; padding-bottom: 120px;}
-            
-              input {width: 500px; height: 40; font-size: xx-large; text-align: center;}
-              .user-table{display: none;}
-            </style>
+            <link href= "/public/assets/stylesheet.css" rel="stylesheet" type="text/css" />            <title>User Information Application</title>
+    </head>
         <body>
             <div>
                 <h1>Hmm. I recognise you,<br> but i've forgotten your name.</h1>
             </div>
             <iframe src="https://giphy.com/embed/4bjIn0rsYmutZRFKmQ" width="480" height="360" style="margin: 0 auto; display: block;" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/jimgaffigan-jim-gaffigan-4bjIn0rsYmutZRFKmQ"></a></p>          
                 <div class="user-table">
-                      <table>
+                    <br>
+                    <br>  
+                    <table method='post' action ='/index' >
                          <% user.forEach((obj)=>{%>
                              <tr>
-                                 <td><%= obj.firstname %></td>
+                                 <td name='newfirstname' placeholder='First Name'>
+                                 </td><%= obj.firstname %></td>
                                  <td><%= obj.lastname %></td>
                              </tr>
                           <% });%>
                     </table>
                 </div>          
                     <div>
-                        <form method='post' action ='/userInfo' class='newUser0'>
-                              <input name='firstname' placeholder='First Name'>
-                                  <br>
-                                    <br>
-                                    <input name='lastname' placeholder='Last Name'>
-                                    <br>
-                                 <br>
+                        <form method='post' action ='/userInfo' name='search' class='form-control'>
+                            <input type='text' placeholder='Name' name='name' class='ghost-input' id='target-name' autocomplete="off">
+                            <br>
+                            <br>
                               <input type='submit' value='search'>
                          </form>
-                    </div>
+                         <div> <ul id="result"> </ul></div>
+                         
                         <div>
                             <h1>Oh, you're new in these parts...<br> Scroll down<br> </h1>
                         </div>
@@ -58,21 +37,57 @@
                                 <h1>Sign up below</h1>
                              </div>
                              <div>
-                                <form method='post' action ='/newuser' class="newuser1">
+                                <form method='post' action ='/newuser' >
                                     <input name='newfirstname' placeholder='First Name'>
                                     <br>
                                      <br>
+                                     <br>
                                      <input name='newlastname' placeholder='Second Name'>
+                                     <br>
                                      <br>
                                      <br>
                                      <input name='newemail' placeholder='Email'>
                                      <br>
                                     <br>
-                                    <input type='submit' value='search'>
+                                    <button class="w3-button w3-block w3-section w3-blue w3-ripple w3-padding">Send</button>
                                 </form>
                             </div>
                       </body>    
-                </head>
+                
                 <footer>
                 </footer>
             </html>
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+            <script type="text/javascript">
+
+                $( document ).ready(function(){    
+                    $("input").keyup(function(){
+                       
+                        var value = $( this ).val()
+                        var data = {
+                           userInput: value
+                       }
+                         
+                            $.ajaxSetup({
+                                type: "POST",
+                                url: "/userInfo",
+                                data: data,              
+                                dataType: "json", 
+                                success: function(result){
+                           
+                        let userArray = result.user
+
+                        for(i = 0; i < userArray.length; i++){  
+                            $("#result").html(`<ul>${(userArray[i].firstname) + ' ' + (userArray[i].lastname)}</ul>`)
+                                    
+                              //  console.log(userArray[i].firstname) + ' ' + (userArray[i].lastname)
+                             
+                                
+                         }}
+                        
+                       }) 
+                     })
+                   })
+                  
+                        
+               </script>
