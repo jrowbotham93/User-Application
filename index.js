@@ -35,15 +35,20 @@
 
     //     function userFinder(){
     //         for(i = 0; i < obj.length; i++){
-    //             if (userInput1 == obj[i].frstname || userInput2 == obj[i].lastname)
+    //             if (userInput1 == obj[i].firstname || userInput2 == obj[i].lastname)
     //             res.render('userInfo', {user: obj[i]})
     //      }
     //     }
     //          userFinder()
     // })
 
+
+
+
+// app posts, with for loop for ajax 
+
     app.post('/userInfo', function (req, res){
-        console.log(req)
+        console.log(req.body)
 
         fs.readFile('users.json', function (error, data){
                 if (error) { throw error}
@@ -51,6 +56,7 @@
                 const result = [];
 
                for (let i = 0; i < obj.length; i++) {
+
                    if (obj[i].firstname.indexOf(req.body.userInput) > -1
                        || obj[i].lastname.indexOf(req.body.userInput) > -1){
                        result.push(obj[i]);
@@ -65,6 +71,9 @@
 
         
     })
+
+
+    // adds new user info to JSON file 
 
     app.post('/newuser', function (req, res){
         fs.readFile('users.json', function (error, data){
@@ -103,3 +112,6 @@
 //     app.get('/:param1', function (req, res) {
 //     console.log(req, params)
 //     res.sender ('index', {cat: req.params.params1}
+
+
+//<ul>${(userArray[i].firstname) + ' ' + (userArray[i].lastname)}</ul>`

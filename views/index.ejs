@@ -62,13 +62,19 @@
 
                 $( document ).ready(function(){    
                     $("input").keyup(function(){
-                       
                         var value = $( this ).val()
                         var data = {
                            userInput: value
                        }
+                         let start = 0;
+
+                         if(value === ""){
+                             $("#result").html("")
+                            return
+                            }
                          
-                            $.ajaxSetup({
+                       setInterval(function(){
+                            $.ajax({
                                 type: "POST",
                                 url: "/userInfo",
                                 data: data,              
@@ -77,17 +83,25 @@
                            
                         let userArray = result.user
 
-                        for(i = 0; i < userArray.length; i++){  
-                            $("#result").html(`<ul>${(userArray[i].firstname) + ' ' + (userArray[i].lastname)}</ul>`)
-                                    
-                              //  console.log(userArray[i].firstname) + ' ' + (userArray[i].lastname)
-                             
-                                
-                         }}
+                        $("#result").html("")
+
                         
-                       }) 
-                     })
-                   })
+                
+                        var res = str.toLowerCase(userArray[i].firstname);
+                        
+}
+
+
+                        for(i = 0; i < userArray.length; i++){  
+                            $("#result").append("<ul>" + userArray[i].firstname || res + " " + userArray[i].lastname + "</ul>")
+                         
+                              console.log(userArray[i].firstname) + ' ' + (userArray[i].lastname)
+                        }}
+                    })
+                })
+            })
+        }, 3000);
+                    
                   
                         
                </script>
